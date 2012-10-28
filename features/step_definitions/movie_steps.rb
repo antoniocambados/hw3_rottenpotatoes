@@ -29,9 +29,24 @@ When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
   
   rating_list.split(', ').each do |rating|
     if uncheck then
-      uncheck(rating)
+      uncheck("ratings[#{rating}]")
     else
-      check(rating)
+      check("ratings[#{rating}]")
     end
   end
+end
+
+Then /^the following ratings should be (un)?checked: (.*)/ do |uncheck, rating_list|
+  rating_list.split(', ').each do |rating|
+    field_checked = find_field("ratings[#{rating}]")['checked']
+    if uncheck then
+      assert(!field_checked, "#{rating} should be unchecked")
+    else
+      assert(field_checked, "#{rating} should be checked")
+    end
+  end
+end
+
+Then /I should see (.*) movies/ do |number|
+  assert page.all('table#movies tbody tr').count == number.to_i
 end
