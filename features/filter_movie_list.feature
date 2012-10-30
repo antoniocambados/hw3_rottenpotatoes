@@ -43,8 +43,6 @@ Scenario: no ratings selected
   And I press "Refresh"
   Then the following ratings should be unchecked: PG, R, G, PG-13
   And I should see 0 movies
-  #And I should see "The Terminator"
-  #And I should see "The Incredibles"
 
 Scenario: all ratings selected
   When I check the following ratings: PG, R, G, PG-13
